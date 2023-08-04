@@ -95,9 +95,10 @@ export const calculateTime = (
       h = totalHours;
       d = totalDays;
       y = totalYears;
-      if (h >= 24) {
-        h = h % 24;
-      }
+      // Problematic code
+      // if (h >= 24) {
+      //   h = h % 24;
+      // }
       if (d >= 365) {
         d = d % 365;
       }

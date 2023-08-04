@@ -4,15 +4,25 @@ import { calculateTime } from './helpers/calculateTime';
 interface TimerInputProps {
   maxMinutes?: number;
   onTimeChange?: (minutes: number) => void;
+  setSeconds?: (seconds: number) => void;
+  setMinutes?: (minutes: number) => void;
+  setHours?: (hours: number) => void;
+  setDays?: (hours: number) => void;
+  setYears?: (minutes: number) => void;
   className?: string;
   seconds: boolean;
 }
 
 export default function TimerInput({
   maxMinutes,
-  onTimeChange,
   className,
   seconds = false,
+  onTimeChange,
+  setSeconds,
+  setMinutes,
+  setHours,
+  setDays,
+  setYears,
 }: TimerInputProps) {
   const [rawInput, setRawInput] = useState('');
   const [visibleInput, setVisibleInput] = useState('');
@@ -24,12 +34,6 @@ export default function TimerInput({
       seconds
     );
 
-    // console.log('Years: ', y);
-    // console.log('Days: ', d);
-    // console.log('Hours: ', h);
-    // console.log('Minutes: ', m);
-    // console.log('Seconds: ', s);
-
     setVisibleInput(
       `${y > 0 ? y + 'y ' : ''}${d > 0 ? d + 'd ' : ''}${
         h > 0 ? h + 'hr ' : ''
@@ -39,7 +43,23 @@ export default function TimerInput({
     if (onTimeChange) {
       onTimeChange(totalMinutesInInput);
     }
-  }, [rawInput, maxMinutes, onTimeChange, seconds]);
+
+    setSeconds && setSeconds(s || 0);
+    setMinutes && setMinutes(m || 0);
+    setHours && setHours(h || 0);
+    setDays && setDays(d || 0);
+    setYears && setYears(y || 0);
+  }, [
+    rawInput,
+    maxMinutes,
+    onTimeChange,
+    seconds,
+    setSeconds,
+    setMinutes,
+    setHours,
+    setDays,
+    setYears,
+  ]);
 
   const handleInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key.match(/[0-9]/)) {
@@ -49,13 +69,18 @@ export default function TimerInput({
     }
   };
 
+  // Prevent changes to the input's value from the onChange event
+  const preventInputChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <input
       className={className}
       type='text'
       onKeyDown={handleInputChange}
+      onChange={preventInputChanges}
       value={visibleInput}
-      readOnly
     />
   );
 }

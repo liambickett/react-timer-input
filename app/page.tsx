@@ -29,7 +29,7 @@ export default function Home() {
               display: 'flex',
               justifyContent: 'space-between',
               width: '85%',
-              bottom: -30,
+              bottom: -25,
             }}
             onClick={() => setSeconds(!seconds)}
           >
