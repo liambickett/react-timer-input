@@ -10,7 +10,7 @@ interface TimerInputProps {
   setDays?: (hours: number) => void;
   setYears?: (minutes: number) => void;
   className?: string;
-  seconds: boolean;
+  seconds?: boolean;
 }
 
 export default function TimerInput({
