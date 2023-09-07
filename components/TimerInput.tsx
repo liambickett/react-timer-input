@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { calculateTime } from './helpers/calculateTime';
 
 interface TimerInputProps {
+  style?: React.CSSProperties;
   maxMinutes?: number;
   onTimeChange?: (minutes: number) => void;
   setSeconds?: (seconds: number) => void;
@@ -14,6 +15,7 @@ interface TimerInputProps {
 }
 
 export default function TimerInput({
+  style,
   maxMinutes,
   className,
   seconds = false,
@@ -76,6 +78,7 @@ export default function TimerInput({
 
   return (
     <input
+      style={style}
       className={className}
       type='text'
       onKeyDown={handleInputChange}
